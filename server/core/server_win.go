@@ -1,3 +1,5 @@
+//go:build windows
+// +build windows
 package core
 
 import (
@@ -5,7 +7,7 @@ import (
 	"net/http"
 	"github.com/gin-gonic/gin"
 )
-//InitServer 函数初始化一个标准的HTTP服务器
+//InitServer 函数初始化一个标准的HTTP服务器(适用Windows系统)
 func initServer(address string, router *gin.Engine) server {
 	return &http.Server{
 		Addr:			address,			//设置服务器监听地址
