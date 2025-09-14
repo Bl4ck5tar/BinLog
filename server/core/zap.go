@@ -47,10 +47,10 @@ func getLogWriter(filename string, maxSize, maxBackups, maxAge int) zapcore.Writ
 //getEncoder 返回一个为生产日志配置的JSON解释器
 func getEncoder() zapcore.Encoder {
 	encoderConfig := zap.NewProductionEncoderConfig()
-	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
-	encoderConfig.TimeKey = "time"
-	encoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
-	encoderConfig.EncodeDuration = zapcore.SecondsDurationEncoder
-	encoderConfig.EncodeCaller = zapcore.ShortCallerEncoder
-	return zapcore.NewJSONEncoder(encoderConfig)
+	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder			//设置时间格式编码器为ISO8601标准
+	encoderConfig.TimeKey = "time"									//修改日志中时间字段的键名，默认是“ts“
+	encoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder	//设置日志级别的编码方式：大写+颜色，例如：INFO-绿色；WARN-黄色；ERROR-红色
+	encoderConfig.EncodeDuration = zapcore.SecondsDurationEncoder	//日志中如果有time.Duration类型字段，就按秒来输出
+	encoderConfig.EncodeCaller = zapcore.ShortCallerEncoder			//设置调用方（调用日志的源代码位置）的显示方式：相对路径+行号；绝对路径则用FullCallerEncoder
+	return zapcore.NewJSONEncoder(encoderConfig)					//返回一个基于上述配置的JSON编码器
 }
