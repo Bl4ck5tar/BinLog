@@ -1,0 +1,25 @@
+package service
+
+import (
+	"BinLog/server/global"
+	"context"
+	"github.com/elastic/go-elasticsearch/v8/typedapi/types"
+)
+
+type EsService struct {
+
+}
+//IndexCreate 创建一个新的 ElasticSearch 索引，带有指定映射
+func (esService *EsService) IndexCreate(indexName string, mapping *types.TypeMapping) error {
+	_, err := global.ESClient.Indices.Create(indexName).Mappings(mapping).Do(context.TODO())
+	return err
+}
+//IndexDelete 删除指定的 ElasticSearch 索引
+func (esService *EsService) IndexDelete(indexName string) error {
+	_, err := global.ESClient.Indices.Delete(indexName).Do(context.TODO())
+	return err
+}
+// IndexExists 检查指定的 ElasticSearch 索引是否存在
+func (esService *EsService) IndexExists(indexName string) (bool, error) {
+	return global.ESClient.Indices.Exists(indexName).Do(context.TODO())
+}
