@@ -2,14 +2,47 @@ package initialize
 
 import (
 	"BinLog/server/global"
+	"BinLog/server/middleware"
+	"BinLog/server/router"
+	"net/http"
 
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 )
+
 //InitRouter 初始化路由
 func InitRouter() *gin.Engine {
 	//设置gin模式
 	gin.SetMode(global.Config.System.Env)
 	Router := gin.Default()
+	//使用日志记录中间件
+	Router.Use(middleware.GinLogger(), middleware.GinRecovery(true))
+	//使用 gin 会话路由
+	var store = cookie.NewStore([]byte(global.Config.System.SessionsSecret))
+	Router.Use(sessions.Sessions("session", store))
+	//将指定目录下的文件提供给客户端
+	//“uploads” 是URL路径前缀，http.Dir("uploads") 是实际文件系统中存储文件的目录
+	Router.StaticFS(global.Config.Upload.Path, http.Dir(global.Config.Upload.Path))
+
+	//创建路由组
+	routerGroup := router.RouterGroupApp
+
+	publicGroup := Router.Group(global.Config.System.RouterPrefix)
+	privateGroup := Router.Group(global.Config.System.RouterPrefix)
+	privateGroup.Use(middleware.JWTAuth())								//私有接口需登录验证
+	
+	adminGroup := Router.Group(global.Config.System.RouterPrefix)
+	adminGroup.Use(middleware.JWTAuth()).Use(middleware.AdminAuth())	//管理员接口需登录验证+管理员权限验证
+	{
+		routerGroup.InitBaseRouter(publicGroup)
+	}
+	{
+		routerGroup.InitUserRouter(privateGroup, publicGroup, adminGroup)
+	}
+	{
+		routerGroup.InitImageRouter(adminGroup)
+	}
 
 	return Router
 }

@@ -26,7 +26,7 @@ type UserCard struct {
 
 
 type UserResetPassword	struct {
-	UserID 		string	`json:"-"`
+	UserID 		uint	`json:"-"`
 	Password 	string	`json:"password" binding:"required,min=8,max=16"`
 	NewPassword	string	`json:"new_password" binding:"required,min=8,max=16"`
 }
