@@ -15,8 +15,10 @@ func FindIllustrations(text string) ([]string, error) {
 	matches := re.FindAllStringSubmatch(text, -1)
 	//matches[0]为整个匹配字符串，match[1]为第一个捕获组-图片描述，match[2]为第二个捕获组-图片链接
 
+	//存储匹配到的所有图片链接
 	var illustrations []string
 
+	//提取每个匹配项的图片链接部分
 	for _, match := range matches {
 		if len(match) > 2 {
 			illustrations = append(illustrations, match[2])
