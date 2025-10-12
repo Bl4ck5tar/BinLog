@@ -432,7 +432,7 @@ func (userApi *UserApi) UserUnfreeze(c *gin.Context) {
 //UserLoginList 获取登录日志列表
 func (userApi *UserApi) UserLoginList(c *gin.Context) {
 	var pageInfo request.UserLoginList
-	err := c.ShouldBindJSON(&pageInfo)
+	err := c.ShouldBindQuery(&pageInfo)
 	if err != nil {
 		global.Log.Error("Failed to get user login list", zap.Error(err))
 		response.FailWithMessage("Failed to get user login list", c)
