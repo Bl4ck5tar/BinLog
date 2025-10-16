@@ -12,7 +12,7 @@ import (
 func SQLExport() error {
 	mysql :=global.Config.Mysql
 
-	timer := time.Now().Format("20060101")
+	timer := time.Now().Format("20060102")
 	sqlPath := fmt.Sprintf("mysql_%s.sql", timer)
 	cmd := exec.Command("docker", "exec", "mysql", "mysqldump", "-u" + mysql.Username, "-p" + mysql.Password, mysql.DBName)
 

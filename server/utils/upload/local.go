@@ -33,7 +33,7 @@ func (*Local) UploadImage(file *multipart.FileHeader) (string, string, error) {
 	}
 
 	//生成md5文件名（避免冲突+安全化）
-	filename := utils.MD5V([]byte(name)) + "-" + time.Now().Format("20060101150405") + ext
+	filename := utils.MD5V([]byte(name)) + "-" + time.Now().Format("20060102150405") + ext
 	path := global.Config.Upload.Path + "/image/"
 
 	if err := os.MkdirAll(path, os.ModePerm); err != nil {

@@ -211,7 +211,7 @@ func (articleService *ArticleService) ArticleCreate(req request.ArticleCreate) e
 	if b {
 		return errors.New("the article already exists")
 	}
-	now := time.Now().Format("2006-01-01 15:01:01")
+	now := time.Now().Format("2006-01-02 15:04:05")
 	articleToCreate := elasticsearch.Article{
 		CreatedAt: 	now,
 		UpdatedAt: 	now,
@@ -307,7 +307,7 @@ func (articleService *ArticleService) ArticleDelete(req request.ArticleDelete) e
 }
 
 func (articleService *ArticleService) ArticleUpdate(req request.ArticleUpdate) error {
-	now := time.Now().Format("2006-01-01 15:01:01")
+	now := time.Now().Format("2006-01-02 15:04:05")
 	articleToUpdate := struct{
 		UpdatedAt	string		`json:"updated_at"`
 		Cover 		string		`json:"cover"`

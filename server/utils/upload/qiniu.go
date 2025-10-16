@@ -39,7 +39,7 @@ func (*Qiniu) UploadImage(file *multipart.FileHeader) (string, string, error) {
 	putRet := storage.PutRet{}																//接收上传返回结果
 	putExtra := storage.PutExtra{Params :map[string]string{}}								//可选额外参数
 
-	fileKey := utils.MD5V([]byte(name)) + "-" + time.Now().Format("20060101150405") + ext
+	fileKey := utils.MD5V([]byte(name)) + "-" + time.Now().Format("20060102150405") + ext
 
 	data, err := file.Open()
 	if err != nil {
