@@ -256,7 +256,7 @@ func (userApi *UserApi) ForgotPassword(c *gin.Context) {
 	}
 
 	//判断邮箱验证码是否过期
-	savedTime := session.Get("expired_time")
+	savedTime := session.Get("expire_time")
 	if savedTime.(int64) < time.Now().Unix() {
 		response.FailWithMessage("The verification code has expired, please resend it", c)
 		return

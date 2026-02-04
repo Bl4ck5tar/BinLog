@@ -8,7 +8,7 @@ import (
 )
 
 
-const configFile = "config.yaml"
+const configFile = "server/config.yaml"
 
 //LoadYAML 从文件中读取YAML数据并返回字节数组
 func LoadYAML() ([]byte, error) {

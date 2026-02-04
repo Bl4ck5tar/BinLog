@@ -42,8 +42,6 @@ func (BaseService *BaseService) SendEmailVerificationCode(c *gin.Context, to str
 					global.Config.Website.Title + `<br/>
 	<br/>`
 
-	_ = utils.Email(to, subject, body)
-
-	return nil
+	return utils.Email(to, subject, body)
 
 }
